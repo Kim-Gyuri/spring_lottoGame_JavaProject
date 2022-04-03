@@ -14,81 +14,81 @@ public class LottoController {
 
     public void start() {
         final Buyer buyer = new Buyer();
-        Money money = getMoney();
-        LotteryException ticket = new LotteryException(money, manualBuyTicket());
+        Money money = InputMoney();
+        LotteryException ticket = new LotteryException(money, InputManualBuyQuantity());
 
         generateLotto(buyer, ticket);
-        OutputView.BuyInfoView(ticket.getCountOfManualPurchase(), ticket.getCountOfAutoPurchase());
+        OutputView.BuyInfoView(ticket.getManualBuyQuantity(), ticket.getAutoBuyQuantity());
         OutputView.InfoMessage(buyer);
 
 
-        WinningLottery winningLotto = buyWinningLotto();
+        WinningLottery winningLotto = InputManualWinningLotto();
         OutputView.lottoResultView(buyer.playTheLottery(winningLotto.getLottoNum(), winningLotto.getBonusNum()));
     }
 
-    private Money getMoney() {
+    private Money InputMoney() {
         try {
-            return tryGetMoney();
+            return tryInputMoney();
         } catch (IllegalArgumentException e) {
             OutputView.getMessage(e.getMessage());
-            return getMoney();
+            return InputMoney();
         }
     }
 
-    private Money tryGetMoney() {
+    private Money tryInputMoney() {
         int money = InputView.inputTotalPrice();
         return new Money(money);
     }
 
-    private int manualBuyTicket() {
+    private int InputManualBuyQuantity() {
         try {
-            return tryManualBuyTicket();
+            return ManualBuyQuantity();
         } catch (IllegalArgumentException e) {
             OutputView.getMessage(e.getMessage());
-            return manualBuyTicket();
+            return InputManualBuyQuantity();
         }
     }
 
-    private int tryManualBuyTicket() {
+    private int ManualBuyQuantity() {
         return InputView.InputManualLottery();
     }
 
     private void generateLotto(final Buyer buyer, final LotteryException ticket) {
-        generateManualLottoNumbers(ticket.getCountOfManualPurchase(), buyer);
-        buyer.buyAutoLotto(ticket.getCountOfAutoPurchase(), new AutoLottoMachine());
+        generateManualLottoNumbers(ticket.getManualBuyQuantity(), buyer);
+        buyer.buyAutoLotto(ticket.getAutoBuyQuantity(), new AutoLottoMachine());
     }
 
     private void generateManualLottoNumbers(final int count, final Buyer buyer) {
         OutputView.getMessage(InputView.INPUT_MANUAL_BUY_NUMBERS_MESSAGE);
         for (int i = 0; i < count; i++) {
-            Lottery lotto = manualBuyLotto();
+            Lottery lotto = InputManualBuyLotto();
             buyer.buyManualLotto(lotto);
         }
     }
 
-    private Lottery manualBuyLotto() {
+    private Lottery InputManualBuyLotto() {
         try {
-            return tryManualBuyLotto();
+            return ImportManualLottoNumber();
         } catch (IllegalArgumentException e) {
             OutputView.getMessage(e.getMessage());
-            return manualBuyLotto();
+            return InputManualBuyLotto();
         }
     }
 
-    private Lottery tryManualBuyLotto() {
+    private Lottery ImportManualLottoNumber() {
         return Lottery.from(InputView.inputManualLotteryNumber());
     }
 
-    private WinningLottery buyWinningLotto() {
+    private WinningLottery InputManualWinningLotto() {
         try {
-            return tryBuyWinningLotto();
+            return ImportBoughtWinningLotto();
         } catch (IllegalArgumentException e) {
             OutputView.getMessage(e.getMessage());
-            return buyWinningLotto();
+            return InputManualWinningLotto();
         }
     }
 
-    private WinningLottery tryBuyWinningLotto() {
+    private WinningLottery ImportBoughtWinningLotto() {
 
         Lottery lotto = Lottery.from(InputView.InputWinningNumber());
         LottoNumber bonusNumber = LottoNumber.from(InputView.InputBonusBall());
