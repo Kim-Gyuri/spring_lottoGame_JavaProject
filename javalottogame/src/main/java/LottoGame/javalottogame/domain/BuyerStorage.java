@@ -1,6 +1,6 @@
 package LottoGame.javalottogame.domain;
 
-public class LotteryException {
+public class BuyerStorage {
 
     public static final int LOTTERY_PRICE = 1000;
     public static final String LOTTERY_MINIMUM_PRICE_ERROR_MESSAGE ="돈은 %d원 이상이어야 합니다.";
@@ -8,12 +8,12 @@ public class LotteryException {
     private final int totalOfBuyQuantity;
     private int manualBuyQuantity;
 
-    public LotteryException(final Money money) {
+    public BuyerStorage(final Money money) {
         validateMinimumPurchasePrice(money);
         this.totalOfBuyQuantity = money.getValue()/LOTTERY_PRICE;
     }
 
-    public LotteryException(final Money money, final int manualBuyQuantity) {
+    public BuyerStorage(final Money money, final int manualBuyQuantity) {
         this(money);
         validateMaximumManualPurchase(manualBuyQuantity);
         this.manualBuyQuantity = manualBuyQuantity;

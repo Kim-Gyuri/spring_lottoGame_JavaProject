@@ -27,17 +27,17 @@ public class InputView {
         }
     }
 
-    public static int inputTotalPrice() {
+    public static int getInputMoney() {
         System.out.println(INPUT_MONEY_MESSAGE);
         return getInt();
     }
 
-    public static int InputManualLottery() {
+    public static int getManualBuyQuantity() {
         System.out.println(INPUT_MANUAL_BUY_MESSAGE);
         return getInt();
     }
 
-    public static List<Integer> inputManualLotteryNumber() {
+    public static List<Integer> getInputManualLottoNumber() {
         try{
             String input = scanner.nextLine().trim();
             return Arrays.stream(input.split(NUMBER_DELIMITER))
@@ -49,12 +49,12 @@ public class InputView {
         }
     }
 
-    public static List<Integer> InputWinningNumber() {
+    public static List<Integer> getWinningNumber() {
         OutputView.getMessage(INPUT_WINNING_NUMBER_MESSAGE);
-        return inputManualLotteryNumber();
+        return getInputManualLottoNumber();
     }
 
-    public static Integer InputBonusBall() {
+    public static Integer getBonusBall() {
         System.out.println(INPUT_BONUS_BALL_MESSAGE);
         return getInt();
     }

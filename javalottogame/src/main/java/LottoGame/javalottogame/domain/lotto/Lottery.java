@@ -37,9 +37,10 @@ public class Lottery {
         }
     }
 
-    public int countCommonValue(final Lottery lottery) {
-        int totalCount = numbers.size() + lottery.numbers.size();
+    public int containCommonNumber(Lottery lotto) {
+        int totalCount = numbers.size() + lotto.numbers.size();
         Set<LottoNumber> set = new HashSet<>(numbers);
+        set.addAll(lotto.numbers);
         return totalCount - set.size();
     }
 
@@ -53,8 +54,10 @@ public class Lottery {
                                            .collect(Collectors.toList()));
     }
 
-    public boolean isContain(Integer Number) {
-        return (int) numbers.stream().filter(x -> x.getStringNumber().equals(numbers)).count() != 0;
+    public boolean isContain(Integer number) {
+        return (int) numbers.stream().filter(x -> x.getStringNumber().equals(number)).count() != 0;
     }
+
+
 
 }

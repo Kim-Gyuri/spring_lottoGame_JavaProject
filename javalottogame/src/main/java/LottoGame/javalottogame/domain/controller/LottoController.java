@@ -1,7 +1,7 @@
 package LottoGame.javalottogame.domain.controller;
 
 import LottoGame.javalottogame.domain.Buyer;
-import LottoGame.javalottogame.domain.LotteryException;
+import LottoGame.javalottogame.domain.BuyerStorage;
 import LottoGame.javalottogame.domain.Money;
 import LottoGame.javalottogame.domain.WinningLottery;
 import LottoGame.javalottogame.domain.lotto.Lottery;
@@ -15,7 +15,7 @@ public class LottoController {
     public void start() {
         final Buyer buyer = new Buyer();
         Money money = InputMoney();
-        LotteryException ticket = new LotteryException(money, InputManualBuyQuantity());
+        BuyerStorage ticket = new BuyerStorage(money, InputManualBuyQuantity());
 
         generateLotto(buyer, ticket);
         OutputView.BuyInfoView(ticket.getManualBuyQuantity(), ticket.getAutoBuyQuantity());
@@ -23,37 +23,37 @@ public class LottoController {
 
 
         WinningLottery winningLotto = InputManualWinningLotto();
-        OutputView.lottoResultView(buyer.playTheLottery(winningLotto.getLottoNum(), winningLotto.getBonusNum()));
+        OutputView.lottoResultView(buyer.playTheLottery_V2(winningLotto));
     }
 
     private Money InputMoney() {
         try {
-            return tryInputMoney();
+            return ImportInputMoney();
         } catch (IllegalArgumentException e) {
             OutputView.getMessage(e.getMessage());
             return InputMoney();
         }
     }
 
-    private Money tryInputMoney() {
-        int money = InputView.inputTotalPrice();
+    private Money ImportInputMoney() {
+        int money = InputView.getInputMoney();
         return new Money(money);
     }
 
     private int InputManualBuyQuantity() {
         try {
-            return ManualBuyQuantity();
+            return ImportManualBuyQuantity();
         } catch (IllegalArgumentException e) {
             OutputView.getMessage(e.getMessage());
             return InputManualBuyQuantity();
         }
     }
 
-    private int ManualBuyQuantity() {
-        return InputView.InputManualLottery();
+    private int ImportManualBuyQuantity() {
+        return InputView.getManualBuyQuantity();
     }
 
-    private void generateLotto(final Buyer buyer, final LotteryException ticket) {
+    private void generateLotto(final Buyer buyer, final BuyerStorage ticket) {
         generateManualLottoNumbers(ticket.getManualBuyQuantity(), buyer);
         buyer.buyAutoLotto(ticket.getAutoBuyQuantity(), new AutoLottoMachine());
     }
@@ -76,7 +76,7 @@ public class LottoController {
     }
 
     private Lottery ImportManualLottoNumber() {
-        return Lottery.from(InputView.inputManualLotteryNumber());
+        return Lottery.from(InputView.getInputManualLottoNumber());
     }
 
     private WinningLottery InputManualWinningLotto() {
@@ -90,8 +90,8 @@ public class LottoController {
 
     private WinningLottery ImportBoughtWinningLotto() {
 
-        Lottery lotto = Lottery.from(InputView.InputWinningNumber());
-        LottoNumber bonusNumber = LottoNumber.from(InputView.InputBonusBall());
+        Lottery lotto = Lottery.from(InputView.getWinningNumber());
+        LottoNumber bonusNumber = LottoNumber.from(InputView.getBonusBall());
         return new WinningLottery(lotto, bonusNumber);
     }
 

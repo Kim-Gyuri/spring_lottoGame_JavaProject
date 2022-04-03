@@ -3,8 +3,6 @@ package LottoGame.javalottogame.domain;
 import LottoGame.javalottogame.domain.lotto.Lottery;
 import LottoGame.javalottogame.domain.lotto.LottoNumber;
 
-import java.util.List;
-
 public class WinningLottery {
 
     public static final String DUPLICATE_BONUS_BALL_ERROR_MESSAGE = "중복된 보너스 볼 입력입니다.";
@@ -17,19 +15,18 @@ public class WinningLottery {
         this.bonusBall = bonusBall;
     }
 
-    public List<Integer> getLottoNum() {
-        return lotto.getNumbers();
-    }
-
-    public Integer getBonusNum() {
-        return bonusBall.getNumber();
-    }
-
-
     private void validateHasBonusBallInLotto(final Lottery lotto, final LottoNumber bonusBall) {
         if (lotto.containNumber(bonusBall)) {
             throw new IllegalArgumentException(DUPLICATE_BONUS_BALL_ERROR_MESSAGE);
         }
+    }
+
+    public boolean IsContainBonusBall(final Lottery lotto) {
+        return lotto.containNumber(bonusBall);
+    }
+
+    public int IsHaveCommonNumber(final Lottery lotto) {
+        return lotto.containCommonNumber(this.lotto);
     }
 
 }

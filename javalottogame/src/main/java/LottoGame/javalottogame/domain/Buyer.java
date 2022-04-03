@@ -29,6 +29,19 @@ public class Buyer {
         myLotto.add(lottery);
     }
 
+    public Statistic playTheLottery_V2(final WinningLottery winningLottery) {
+        Statistic statistic = new Statistic();
+
+        for (Lottery lotto : myLotto) {
+            int match = winningLottery.IsHaveCommonNumber(lotto);
+            //System.out.println("match = " + match);
+            boolean hasBonusBall = winningLottery.IsContainBonusBall(lotto);
+            //System.out.println("hasBonusBall = " + hasBonusBall);
+            statistic.pushStatistic(Rank.valueOf(match, hasBonusBall));
+        }
+        return statistic;
+    }
+
     public Statistic playTheLottery(List<Integer> lottoNumber, Integer bonusNumber) {
         Statistic statistic = new Statistic();
 

@@ -14,8 +14,7 @@ public class OutputView {
     private static final String BUY_INFO_MESSAGE = ENTER + "수동으로 %d장, 자동으로 %d장을 구매했습니다." + ENTER;
     private static final String WINNING_DETAIL_HEADER = ENTER + "당첨 통계" + ENTER + "---------";
     private static final String PRINT_FORMAT = "%d개 일치 (%d원) - %d개" + ENTER;
-   // private static final String WINNING_RESULT_PRINT_FORMAT = "%d개 일치, 보너스 볼 일치 (%d원) - %d개" + ENTER;
-    private static final String TOTAL_EARNING_RATE_MESSAGE = "총 수익률은 %.2f입니다.";
+    private static final String TOTAL_EARNING_RATE_MESSAGE = "총 수익률은 %.2f 입니다.";
     private static final String NUMBER_DELIMITER = ",";
     private static final String LOTTO_RESULT_OPEN = "[";
     private static final String LOTTO_RESULT_CLOSE = "]";
